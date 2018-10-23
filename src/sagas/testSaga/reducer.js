@@ -3,7 +3,8 @@ import * as action from './actions'
 export const init = () => {
   return {
     type: action.INIT,
-    payload: {}
+    payload: {},
+    name: {}
   }
 }
 
@@ -13,6 +14,9 @@ const ACTION_HANDLERS = {
   },
   [action.INIT]: (state, action) => {
     return { ...state, ...action.payload }
+  },
+  [action.CHANGE_NAME]: (state, action) => {
+    return { ...state, ...action.name}
   }
 }
 
