@@ -26,6 +26,11 @@ class SideNav extends React.PureComponent {
     }
 
     render() {
+        const sideBarStyle = {
+            width: '250px',
+            color: 'white',
+            backgroundColor: 'gray'
+        };
         const {navCollapsed, drawerType, width, isDirectionRTL, navigationStyle} = this.props;
         let drawerStyle = drawerType.includes(FIXED_DRAWER) ? 'd-xl-flex' : drawerType.includes(COLLAPSED_DRAWER) ? '' : 'd-flex';
         let type = true;
@@ -38,20 +43,9 @@ class SideNav extends React.PureComponent {
         }
 
         return (
-            <Drawer docked={type} className={`app-sidebar ${drawerStyle}`}
-                    style={{overflow: 'auto'}}
-                    touch={true}
-                    position={isDirectionRTL ? 'right' : 'left'}
-                    transitions={true}
-                    enableDragHandle={true}
-                    open={navCollapsed}
-                    onOpenChange={this.onToggleCollapsedNav}
-                    sidebar={<div className="side-nav">
-                        <SidenavLogo drawerType={drawerType}/>
-                        <SidenavContent/>
-                    </div>}>
-                <div/>
-            </Drawer>
+            <div style={sideBarStyle}>
+                Sidebar Content
+            </div>
         );
     }
 }
