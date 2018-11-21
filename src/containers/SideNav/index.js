@@ -62,7 +62,7 @@ class SideNav extends React.PureComponent {
       <div style={sideBarStyle}>
         <div className="app-logo">
           <div className="row align-items-center">
-            <div className="col-lg-6 col-md-6 col-sm-12">
+            <div className="col-lg-6 col-md-6 col-sm-12 horizontal-align-center">
                 <center>
                     <img
                         alt="..."
