@@ -11,6 +11,9 @@ import {
   HORIZONTAL_NAVIGATION
 } from "constants/ActionTypes";
 import { toggleCollapsedNav, updateWindowWidth } from "actions/Setting";
+import CardLayout from "../../components/CardLayout"
+import ListCard from "../../components/Cards/List"
+import PostBoxes from "../../components/Cards/List/PostBoxes";
 
 class SideNav extends React.PureComponent {
   onToggleCollapsedNav = e => {
@@ -78,6 +81,18 @@ class SideNav extends React.PureComponent {
           </div>
         </div>
         Sidebar Content
+        <CardLayout>
+          <CardLayout>
+              <p className="card-subtitle">
+                  Fusce eget dolor id justo luctus commodo vel pharetra nisi. Donec velit libero
+              </p>
+          </CardLayout>
+          <CardLayout>
+              <p className="card-subtitle">
+                  Card 2
+              </p>
+          </CardLayout>
+        </CardLayout>
       </div>
     );
   }
