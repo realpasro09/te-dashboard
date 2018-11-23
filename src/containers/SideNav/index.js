@@ -93,6 +93,10 @@ class SideNav extends React.PureComponent {
               </p>
           </CardLayout>
         </CardLayout>
+        <center>
+        <button type="button">Agregar Perfil</button>
+        </center>
+        
       </div>
     );
   }
