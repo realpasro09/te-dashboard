@@ -102,7 +102,7 @@ class SideNav extends React.PureComponent {
         }
 					<center>
 					<button type="button">Agregar Perfil</button>
-      </center>
+					</center>
 			</div >
 		);
 	}
