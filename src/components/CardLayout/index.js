@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CardLayout = ({children, styleName, childrenStyle}) => {
+const CardLayout = ({children, style, childrenStyle}) => {
     return (
         <div className={`jr-card`}>
             {children}

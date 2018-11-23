@@ -13,7 +13,7 @@ import {
 import { toggleCollapsedNav, updateWindowWidth } from "actions/Setting";
 import CardLayout from "../../components/CardLayout"
 import ListCard from "../../components/Cards/List"
-import PostBoxes from "../../components/Cards/List/PostBoxes";
+import { Card } from "reactstrap";
 
 class SideNav extends React.PureComponent {
   onToggleCollapsedNav = e => {
@@ -35,7 +35,8 @@ class SideNav extends React.PureComponent {
     const sideBarStyle = {
       width: "250px",
       color: "white",
-      backgroundColor: "gray"
+      backgroundColor: "gray",
+      overflowY: "scroll"
     };
     const {
       navCollapsed,
@@ -80,19 +81,8 @@ class SideNav extends React.PureComponent {
             </div>
           </div>
         </div>
-        Sidebar Content
-        <CardLayout>
-          <CardLayout>
-              <p className="card-subtitle">
-                  Fusce eget dolor id justo luctus commodo vel pharetra nisi. Donec velit libero
-              </p>
-          </CardLayout>
-          <CardLayout>
-              <p className="card-subtitle">
-                  Card 2
-              </p>
-          </CardLayout>
-        </CardLayout>
+        <br/>
+        <ListCard></ListCard>
       </div>
     );
   }
