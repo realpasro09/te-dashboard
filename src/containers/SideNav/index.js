@@ -14,6 +14,7 @@ import { toggleCollapsedNav, updateWindowWidth } from "actions/Setting";
 import CardLayout from "../../components/CardLayout"
 import ListCard from "../../components/Cards/List"
 import { Card } from "reactstrap";
+import AddContact from '../../components/contact/AddContact'
 
 class SideNav extends React.PureComponent {
 	onToggleCollapsedNav = e => {
@@ -23,6 +24,9 @@ class SideNav extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			editProfileState: false,
+		}
 	}
 
 	componentDidMount() {
@@ -30,6 +34,14 @@ class SideNav extends React.PureComponent {
 			this.props.updateWindowWidth(window.innerWidth);
 		});
 	}
+
+	onProfileClose = () => {
+		this.setState({ editProfileState: false });
+	};
+
+	onEditProfile = () => {
+		this.setState({ editProfileState: true });
+	};
 
 	render() {
 		const sideBarStyle = {
@@ -45,6 +57,7 @@ class SideNav extends React.PureComponent {
 			isDirectionRTL,
 			navigationStyle
 		} = this.props;
+		const { editProfileState } = this.state;
 		let drawerStyle = drawerType.includes(FIXED_DRAWER)
 			? "d-xl-flex"
 			: drawerType.includes(COLLAPSED_DRAWER)
@@ -82,8 +95,12 @@ class SideNav extends React.PureComponent {
 					</div>
 				</div>
 				<br />
-				<ListCard></ListCard>
-			</div>
+				<ListCard onEditProfile={this.onEditProfile} />
+				{
+					editProfileState &&
+					<AddContact open={editProfileState} onContactClose={this.onProfileClose} />
+				}
+			</div >
 		);
 	}
 }
