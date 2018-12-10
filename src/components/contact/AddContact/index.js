@@ -49,7 +49,7 @@ class AddContact extends React.Component {
 								onChange={(event) => this.setState({ name: event.target.value })}
 								defaultValue={name}
 							/>
-							<textarea name="comentarios" rows="10" cols="40"
+							<textarea rows="10"
 								placeholder="Criterios de busqueda"
 								onChange={(event) => this.setState({ busqueda: event.target.value })}
 								value={busqueda}
