@@ -91,7 +91,10 @@ class AddContact extends React.Component {
 						// 	'phone': '',
 						// 	'designation': '',
 						// })
-					}}><IntlMessages id="contact.saveContact" /></Button>
+					}}><IntlMessages id="profile.saveProfile" /></Button>
+					<Button className="text-uppercase" disabled={name === ''} color="secondary" onClick={() => {
+						onContactClose();
+					}}><IntlMessages id="profile.cancel" /></Button>
 				</div>
 			</Modal>
 		);
