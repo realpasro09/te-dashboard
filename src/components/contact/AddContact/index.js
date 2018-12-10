@@ -31,8 +31,8 @@ class AddContact extends React.Component {
 		return (
 			<Modal className="modal-box" toggle={onContactClose} isOpen={open}>
 				<ModalHeader className="modal-box-header bg-primary">
-					{contact.name === '' ? <IntlMessages id="contact.addContact" /> :
-						<IntlMessages id="contact.saveContact" />}
+					{contact.name === '' ? <IntlMessages id="profile.addProfile" /> :
+						<IntlMessages id="profile.saveProfile" />}
 					<span className="text-white pointer">
 						<i className="zmdi zmdi-close zmdi-hc-lg" onClick={onContactClose} />
 					</span>
@@ -46,11 +46,11 @@ class AddContact extends React.Component {
 
 						<div className="col-lg-9 d-flex flex-column order-lg-1">
 							<input type="text" className="form-control mb-2"
-								placeholder="Name"
+								placeholder="Nombre"
 								onChange={(event) => this.setState({ name: event.target.value })}
 								defaultValue={name}
 							/>
-							<textarea rows="10"
+							<textarea rows="10" className="form-control mb-2"
 								placeholder="Criterios de busqueda"
 								onChange={(event) => this.setState({ search: event.target.value })}
 								value={search}
