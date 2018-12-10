@@ -99,8 +99,8 @@ class SideNav extends React.PureComponent {
 				{
 					editProfileState &&
 					<AddContact open={editProfileState} onContactClose={this.onProfileClose} />
-        }
-					<button class="jt-btn jr-btn-primary text-uppercase btn-block btn btn-primary">Agregar Perfil</button>
+				}
+				<button className="jt-btn jr-btn-primary text-uppercase btn-block btn btn-primary">Agregar Perfil</button>
 			</div >
 		);
 	}
