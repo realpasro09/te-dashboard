@@ -22,7 +22,7 @@ class AddContact extends React.Component {
 
 	render() {
 		const { onSaveContact, onDeleteContact, onContactClose, open, contact = {} } = this.props;
-		const { id, name, busqueda, phone, designation, selected, starred, frequently } = this.state;
+		const { id, name, search, phone, designation, selected, starred, frequently } = this.state;
 		let { thumb } = this.state;
 		if (!thumb) {
 			thumb = 'http://via.placeholder.com/225x225';
