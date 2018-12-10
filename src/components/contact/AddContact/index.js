@@ -22,7 +22,7 @@ class AddContact extends React.Component {
 
 	render() {
 		const { onSaveContact, onDeleteContact, onContactClose, open, contact = {} } = this.props;
-		const { id, name, email, phone, designation, selected, starred, frequently } = this.state;
+		const { id, name, busqueda, phone, designation, selected, starred, frequently } = this.state;
 		let { thumb } = this.state;
 		if (!thumb) {
 			thumb = 'http://via.placeholder.com/225x225';
@@ -49,20 +49,10 @@ class AddContact extends React.Component {
 								onChange={(event) => this.setState({ name: event.target.value })}
 								defaultValue={name}
 							/>
-							<input type="text" className="form-control mb-2"
-								placeholder="Email"
-								onChange={(event) => this.setState({ email: event.target.value })}
-								value={email}
-							/>
-							<input type="text" className="form-control mb-2"
-								placeholder="Phone"
-								onChange={(event) => this.setState({ phone: event.target.value })}
-								value={phone}
-							/>
-							<input type="text" className="form-control mb-2"
-								placeholder="Designation"
-								onChange={(event) => this.setState({ designation: event.target.value })}
-								value={designation}
+							<textarea name="comentarios" rows="10" cols="40"
+								placeholder="Criterios de busqueda"
+								onChange={(event) => this.setState({ busqueda: event.target.value })}
+								value={busqueda}
 							/>
 						</div>
 					</div>
