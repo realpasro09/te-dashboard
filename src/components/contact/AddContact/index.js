@@ -52,7 +52,7 @@ class AddContact extends React.Component {
 							<textarea rows="10"
 								placeholder="Criterios de busqueda"
 								onChange={(event) => this.setState({ search: event.target.value })}
-								value={busqueda}
+								value={search}
 							/>
 						</div>
 					</div>
