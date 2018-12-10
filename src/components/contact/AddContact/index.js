@@ -17,6 +17,7 @@ class AddContact extends React.Component {
 			// selected,
 			// starred,
 			// frequently,
+			search: ""
 		};
 	}
 
