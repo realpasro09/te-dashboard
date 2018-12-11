@@ -17,12 +17,13 @@ class AddContact extends React.Component {
 			// selected,
 			// starred,
 			// frequently,
+			search: ""
 		};
 	}
 
 	render() {
 		const { onSaveContact, onDeleteContact, onContactClose, open, contact = {} } = this.props;
-		const { id, name, email, phone, designation, selected, starred, frequently } = this.state;
+		const { id, name, search, phone, designation, selected, starred, frequently } = this.state;
 		let { thumb } = this.state;
 		if (!thumb) {
 			thumb = 'http://via.placeholder.com/225x225';
@@ -30,8 +31,8 @@ class AddContact extends React.Component {
 		return (
 			<Modal className="modal-box" toggle={onContactClose} isOpen={open}>
 				<ModalHeader className="modal-box-header bg-primary">
-					{contact.name === '' ? <IntlMessages id="contact.addContact" /> :
-						<IntlMessages id="contact.saveContact" />}
+					{contact.name === '' ? <IntlMessages id="profile.addProfile" /> :
+						<IntlMessages id="profile.saveProfile" />}
 					<span className="text-white pointer">
 						<i className="zmdi zmdi-close zmdi-hc-lg" onClick={onContactClose} />
 					</span>
@@ -45,24 +46,14 @@ class AddContact extends React.Component {
 
 						<div className="col-lg-9 d-flex flex-column order-lg-1">
 							<input type="text" className="form-control mb-2"
-								placeholder="Name"
+								placeholder="Nombre"
 								onChange={(event) => this.setState({ name: event.target.value })}
 								defaultValue={name}
 							/>
-							<input type="text" className="form-control mb-2"
-								placeholder="Email"
-								onChange={(event) => this.setState({ email: event.target.value })}
-								value={email}
-							/>
-							<input type="text" className="form-control mb-2"
-								placeholder="Phone"
-								onChange={(event) => this.setState({ phone: event.target.value })}
-								value={phone}
-							/>
-							<input type="text" className="form-control mb-2"
-								placeholder="Designation"
-								onChange={(event) => this.setState({ designation: event.target.value })}
-								value={designation}
+							<textarea rows="10" className="form-control mb-2"
+								placeholder="Criterios de busqueda"
+								onChange={(event) => this.setState({ search: event.target.value })}
+								value={search}
 							/>
 						</div>
 					</div>
@@ -91,7 +82,10 @@ class AddContact extends React.Component {
 						// 	'phone': '',
 						// 	'designation': '',
 						// })
-					}}><IntlMessages id="contact.saveContact" /></Button>
+					}}><IntlMessages id="profile.saveProfile" /></Button>
+					<Button className="text-uppercase" disabled={name === ''} color="secondary" onClick={() => {
+						onContactClose();
+					}}><IntlMessages id="profile.cancel" /></Button>
 				</div>
 			</Modal>
 		);
