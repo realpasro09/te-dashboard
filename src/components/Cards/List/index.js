@@ -9,11 +9,11 @@ const style = {
 	minHeight: "30px",
 };
 
-const ListCard = ({ onEditProfile }) => {
+const ListCard = ({ onEditProfile, profiles }) => {
 	return (
 		<div>
-			{card.map((card, index) => (
-				<CardProfile key={index} text={card.text} onEditProfile={onEditProfile} />
+			{profiles.map((card, index) => (
+				<CardProfile key={index} text={card.nombre} onEditProfile={onEditProfile} />
 			))}
 		</div>
 	);

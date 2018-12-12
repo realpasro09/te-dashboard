@@ -5,6 +5,7 @@ import Drawer from "rc-drawer";
 import { Config } from "constants/ThemeColors";
 import SidenavContent from "./SidenavContent";
 import SidenavLogo from "components/SidenavLogo";
+import {listProfiles} from "../../actions/General";
 import {
 	COLLAPSED_DRAWER,
 	FIXED_DRAWER,
@@ -33,6 +34,7 @@ class SideNav extends React.PureComponent {
 		window.addEventListener("resize", () => {
 			this.props.updateWindowWidth(window.innerWidth);
 		});
+		this.props.listProfiles();
 	}
 
 	onProfileClose = () => {
@@ -95,7 +97,9 @@ class SideNav extends React.PureComponent {
 					</div>
 				</div>
 				<br />
-				<ListCard onEditProfile={this.onEditProfile} />
+				{
+					this.props.profiles && 
+					<ListCard profiles={this.props.profiles} onEditProfile={this.onEditProfile} />}
 				{
 					editProfileState &&
 					<AddContact open={editProfileState} onContactClose={this.onProfileClose} />
@@ -106,7 +110,7 @@ class SideNav extends React.PureComponent {
 	}
 }
 
-const mapStateToProps = ({ settings }) => {
+const mapStateToProps = ({ settings, general }) => {
 	const {
 		navCollapsed,
 		drawerType,
@@ -114,12 +118,13 @@ const mapStateToProps = ({ settings }) => {
 		isDirectionRTL,
 		navigationStyle
 	} = settings;
-	return { navCollapsed, drawerType, width, isDirectionRTL, navigationStyle };
+	const {profiles} = general;
+	return { navCollapsed, drawerType, width, isDirectionRTL, navigationStyle, profiles };
 };
 
 export default withRouter(
 	connect(
 		mapStateToProps,
-		{ toggleCollapsedNav, updateWindowWidth }
+		{ toggleCollapsedNav, updateWindowWidth, listProfiles},
 	)(SideNav)
 );

@@ -1,7 +1,9 @@
 import { CONSTANT_VALUE } from 'constants/ActionTypes';
+import { LIST_PROFILES_SUCCEEDED } from 'constants/ActionTypes';
 
 const initialState = {
-    newValue: ''
+    newValue: '',
+    profiles: []
 };
 
 const generalState = (state = initialState, action) => {
@@ -10,6 +12,11 @@ const generalState = (state = initialState, action) => {
             return {
                 ...state,
                 newValue: action.newValue
+            };
+        case LIST_PROFILES_SUCCEEDED:
+            return {
+                ...state,
+                profiles: action.profiles
             };
         default:
             return state;
