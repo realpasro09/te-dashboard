@@ -138,3 +138,5 @@ export const REMOVE_LABEL = 'remove_label';
 export const UPDATE_SEARCH = 'update_search';
 
 export const CONSTANT_VALUE = 'constant_value';
+export const LIST_PROFILES = 'list_profiles';
+export const LIST_PROFILES_SUCCEEDED = 'list_profiles_succeeded';
