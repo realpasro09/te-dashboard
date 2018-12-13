@@ -1,6 +1,9 @@
 import React from 'react';
 import { Button, Modal, ModalHeader } from 'reactstrap';
 import IntlMessages from 'util/IntlMessages';
+import { createProfile, setCreateProfileSuceded } from 'actions/General'
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class AddContact extends React.Component {
 	constructor(props) {
@@ -10,7 +13,7 @@ class AddContact extends React.Component {
 		this.state = {
 			// id,
 			// thumb,
-			// name,
+			name: "",
 			// email,
 			// phone,
 			// designation,
@@ -19,6 +22,13 @@ class AddContact extends React.Component {
 			// frequently,
 			search: ""
 		};
+	}
+
+	componentDidUpdate() {
+		if (this.props.createProfileSuceded) {
+			this.props.setCreateProfileSuceded(false);
+			this.props.onContactClose();
+		}
 	}
 
 	render() {
@@ -60,8 +70,9 @@ class AddContact extends React.Component {
 				</div>
 
 				<div className="modal-box-footer d-flex flex-row">
-					<Button className="text-uppercase" disabled={name === ''} color="primary" onClick={() => {
-						onContactClose();
+					<Button className="text-uppercase" disabled={name === '' || search === ''} color="primary" onClick={() => {
+						this.props.createProfile({ nombre: name, categorias: 'categorias', busquedas: search });
+						// onContactClose();
 						// onSaveContact(
 						// 	{
 						// 		'id': id,
@@ -83,7 +94,7 @@ class AddContact extends React.Component {
 						// 	'designation': '',
 						// })
 					}}><IntlMessages id="profile.saveProfile" /></Button>
-					<Button className="text-uppercase" disabled={name === ''} color="secondary" onClick={() => {
+					<Button className="text-uppercase" color="secondary" onClick={() => {
 						onContactClose();
 					}}><IntlMessages id="profile.cancel" /></Button>
 				</div>
@@ -92,4 +103,9 @@ class AddContact extends React.Component {
 	}
 }
 
-export default AddContact;
+const mapStateToProps = ({ general }) => {
+	const { createProfileSuceded } = general;
+	return { createProfileSuceded }
+};
+
+export default withRouter(connect(mapStateToProps, { createProfile, setCreateProfileSuceded })(AddContact));

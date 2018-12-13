@@ -140,3 +140,5 @@ export const UPDATE_SEARCH = 'update_search';
 export const CONSTANT_VALUE = 'constant_value';
 export const LIST_PROFILES = 'list_profiles';
 export const LIST_PROFILES_SUCCEEDED = 'list_profiles_succeeded';
+export const CREATE_PROFILE = 'create_profile';
+export const CREATE_PROFILE_SUCEDED = 'create_profile_suceded';

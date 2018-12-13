@@ -5,7 +5,7 @@ import Drawer from "rc-drawer";
 import { Config } from "constants/ThemeColors";
 import SidenavContent from "./SidenavContent";
 import SidenavLogo from "components/SidenavLogo";
-import {listProfiles} from "../../actions/General";
+import { listProfiles } from "../../actions/General";
 import {
 	COLLAPSED_DRAWER,
 	FIXED_DRAWER,
@@ -98,13 +98,13 @@ class SideNav extends React.PureComponent {
 				</div>
 				<br />
 				{
-					this.props.profiles && 
+					this.props.profiles &&
 					<ListCard profiles={this.props.profiles} onEditProfile={this.onEditProfile} />}
 				{
 					editProfileState &&
 					<AddContact open={editProfileState} onContactClose={this.onProfileClose} />
 				}
-				<button className="jt-btn jr-btn-primary text-uppercase btn-block btn btn-primary">Agregar Perfil</button>
+				<button className="jt-btn jr-btn-primary text-uppercase btn-block btn btn-primary" onClick={() => { this.onEditProfile() }}> Agregar Perfil</button >
 			</div >
 		);
 	}
@@ -118,13 +118,13 @@ const mapStateToProps = ({ settings, general }) => {
 		isDirectionRTL,
 		navigationStyle
 	} = settings;
-	const {profiles} = general;
+	const { profiles } = general;
 	return { navCollapsed, drawerType, width, isDirectionRTL, navigationStyle, profiles };
 };
 
 export default withRouter(
 	connect(
 		mapStateToProps,
-		{ toggleCollapsedNav, updateWindowWidth, listProfiles},
+		{ toggleCollapsedNav, updateWindowWidth, listProfiles },
 	)(SideNav)
 );
