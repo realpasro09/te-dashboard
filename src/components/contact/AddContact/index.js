@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader } from 'reactstrap';
 import IntlMessages from 'util/IntlMessages';
-import { createProfile, setCreateProfileSuceded } from 'actions/general'
+import { createProfile, setCreateProfileSuceded } from 'actions/General'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
