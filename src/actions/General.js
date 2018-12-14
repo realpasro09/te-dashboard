@@ -2,7 +2,9 @@ import {
 	CONSTANT_VALUE,
 	LIST_PROFILES,
 	CREATE_PROFILE,
-	CREATE_PROFILE_SUCEDED
+	CREATE_PROFILE_SUCEDED,
+    GET_CATEGORY,
+    CHANGE_CHECKBOX_VALUE
 } from 'constants/ActionTypes';
 
 export function setNewValue(newValue) {
@@ -19,4 +21,12 @@ export function setCreateProfileSuceded(value) {
 
 export function listProfiles() {
 	return { type: LIST_PROFILES };
+}
+
+export function getCategories(){
+    return {type: GET_CATEGORY};
+}
+
+export function changeCheckboxvalue(payload){
+    return {type: CHANGE_CHECKBOX_VALUE, payload};
 }
