@@ -3,7 +3,6 @@ import { Button, Modal, ModalHeader } from 'reactstrap';
 import IntlMessages from 'util/IntlMessages';
 import { createProfile, setCreateProfileSuceded } from 'actions/General'
 import { withRouter } from 'react-router-dom';
-import IntlMessages from "util/IntlMessages";
 import { getCategories, changeCheckboxvalue } from "../../../actions/General";
 import { connect } from "react-redux";
 
