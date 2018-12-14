@@ -142,3 +142,7 @@ export const LIST_PROFILES = 'list_profiles';
 export const LIST_PROFILES_SUCCEEDED = 'list_profiles_succeeded';
 export const CREATE_PROFILE = 'create_profile';
 export const CREATE_PROFILE_SUCEDED = 'create_profile_suceded';
+export const GET_CATEGORY = 'GET_CATEGORY';
+export const GET_CATEGORY_SUCCESS = 'GET_CATEGORY_SUCCESS';
+export const CHANGE_CHECKBOX_VALUE = 'CHANGE_CHECKBOX_VALUE';
+export const CHANGE_CHECKBOX_VALUE_SUCCESS = 'CHANGE_CHECKBOX_VALUE_SUCCESS';

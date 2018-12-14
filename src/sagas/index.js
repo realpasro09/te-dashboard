@@ -1,5 +1,6 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
 import { LIST_PROFILES_SUCCEEDED, LIST_PROFILES, CREATE_PROFILE, CREATE_PROFILE_SUCEDED } from "../constants/ActionTypes";
+import {GET_CATEGORY, GET_CATEGORY_SUCCESS, CHANGE_CHECKBOX_VALUE, CHANGE_CHECKBOX_VALUE_SUCCESS} from 'constants/ActionTypes';
 
 function* fetchNews() {
 	const json = yield fetch('https://newsapi.org/v1/articles?source=cnn&apiKey=c39a26d9c12f48dba2a5c00e35684ecc')
@@ -33,10 +34,30 @@ function* createProfileWatcher() {
 	yield takeLatest(CREATE_PROFILE, createProfile)
 }
 
+function* getCategories(){
+    const json = yield fetch('http://localhost:8081/api/listar-categorias')
+    .then(response => response.json(), );    
+    yield put({ type: GET_CATEGORY_SUCCESS, categories: json, });
+}
+
+function* getCategoryWatcher(){
+    yield takeLatest(GET_CATEGORY, getCategories)
+}
+
+function* changeCheckboxValue(action){
+    yield put({ type: CHANGE_CHECKBOX_VALUE_SUCCESS, category: action.payload});
+}
+
+function* changeCheckboxValueWatcher(){
+    yield takeLatest(CHANGE_CHECKBOX_VALUE, changeCheckboxValue)
+}
+
 export default function* rootSaga() {
 	yield all([
 		actionWatcher(),
 		listProfileWatcher(),
 		createProfileWatcher(),
+		getCategoryWatcher(),
+        changeCheckboxValueWatcher(),
 	]);
 }
