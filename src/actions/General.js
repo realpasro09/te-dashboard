@@ -3,8 +3,11 @@ import {
 	LIST_PROFILES,
 	CREATE_PROFILE,
 	CREATE_PROFILE_SUCEDED,
-    GET_CATEGORY,
-    CHANGE_CHECKBOX_VALUE
+	GET_CATEGORY,
+	CHANGE_CHECKBOX_VALUE,
+	GET_PROFILE,
+	UPDATE_PROFILE,
+	SET_CATEGORIES
 } from 'constants/ActionTypes';
 
 export function setNewValue(newValue) {
@@ -23,10 +26,22 @@ export function listProfiles() {
 	return { type: LIST_PROFILES };
 }
 
-export function getCategories(){
-    return {type: GET_CATEGORY};
+export function getCategories() {
+	return { type: GET_CATEGORY };
 }
 
-export function changeCheckboxvalue(payload){
-    return {type: CHANGE_CHECKBOX_VALUE, payload};
+export function changeCheckboxvalue(payload) {
+	return { type: CHANGE_CHECKBOX_VALUE, payload };
+}
+
+export function getProfile(id) {
+	return { type: GET_PROFILE, id };
+}
+
+export function updateProfile(payload) {
+	return { type: UPDATE_PROFILE, payload };
+}
+
+export function setCategories(categories) {
+	return { type: SET_CATEGORIES, categories };
 }
