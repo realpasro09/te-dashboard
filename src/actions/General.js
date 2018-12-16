@@ -6,7 +6,8 @@ import {
 	GET_CATEGORY,
 	CHANGE_CHECKBOX_VALUE,
 	GET_PROFILE,
-	UPDATE_PROFILE
+	UPDATE_PROFILE,
+	SET_CATEGORIES
 } from 'constants/ActionTypes';
 
 export function setNewValue(newValue) {
@@ -39,4 +40,8 @@ export function getProfile(id) {
 
 export function updateProfile(payload) {
 	return { type: UPDATE_PROFILE, payload };
+}
+
+export function setCategories(categories) {
+	return { type: SET_CATEGORIES, categories };
 }

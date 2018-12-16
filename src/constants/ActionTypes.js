@@ -149,3 +149,4 @@ export const CHANGE_CHECKBOX_VALUE_SUCCESS = 'CHANGE_CHECKBOX_VALUE_SUCCESS';
 export const GET_PROFILE = 'get_profile';
 export const GET_PROFILE_SUCEDED = 'get_profile_suceded';
 export const UPDATE_PROFILE = 'update_profile';
+export const SET_CATEGORIES = 'set_categories';

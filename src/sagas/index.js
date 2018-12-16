@@ -65,7 +65,6 @@ function* getProfileWatcher() {
 };
 
 function* updateProfile(action) {
-	console.log(action);
 	const json = yield fetch('http://localhost:8081/api/editar-perfil/' + action.payload.id,
 		{
 			method: 'post',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader } from 'reactstrap';
 import IntlMessages from 'util/IntlMessages';
-import { createProfile, setCreateProfileSuceded, getProfile, updateProfile } from 'actions/General'
+import { createProfile, setCreateProfileSuceded, getProfile, updateProfile, setCategories } from 'actions/General'
 import { withRouter } from 'react-router-dom';
 import { getCategories, changeCheckboxvalue } from "../../../actions/General";
 import { connect } from "react-redux";
@@ -12,7 +12,7 @@ class AddContact extends React.Component {
 		this.state = {
 			name: "",
 			search: "",
-			profile: this.props.profile
+			profile: this.props.profile,
 		};
 	}
 
@@ -24,6 +24,16 @@ class AddContact extends React.Component {
 
 		if (this.props.profile !== this.state.profile) {
 			const { profile } = this.props;
+
+			let categories = profile.categorias.concat(this.props.categories);
+			categories = categories.filter((category, index, self) =>
+				index === self.findIndex((c) => (
+					c.nombre === category.nombre
+				))
+			)
+
+			this.props.setCategories(categories);
+
 			this.setState({ profile, name: profile.nombre, search: profile.busquedas });
 		}
 	}
@@ -56,7 +66,7 @@ class AddContact extends React.Component {
 			);
 		}
 
-		const { onContactClose, open, contact = {}, id } = this.props;
+		const { onContactClose, open, contact = {}, id, categories } = this.props;
 		const { name, search, profile } = this.state;
 		let { thumb } = this.state;
 		if (!thumb) {
@@ -85,7 +95,7 @@ class AddContact extends React.Component {
 								value={name}
 							/>
 							<div>
-								{this.props.categories.map(createCheckboxes)}
+								{categories.map(createCheckboxes)}
 							</div>
 							<textarea rows="10" className="form-control mb-2"
 								placeholder="Criterios de busqueda"
@@ -99,10 +109,12 @@ class AddContact extends React.Component {
 				<div className="modal-box-footer d-flex flex-row">
 					<Button className="text-uppercase" disabled={name === '' || search === ''} color="primary" onClick={() => {
 						if (!id) {
-							this.props.createProfile({ nombre: name, categorias: 'categorias', busquedas: search });
+							const selectedCategories = categories.filter(category => category.seleccionado);
+							this.props.createProfile({ nombre: name, categorias: selectedCategories, busquedas: search });
 						}
 						else {
-							this.props.updateProfile({ id: profile._id, profile: { nombre: name, categorias: 'categorias', busquedas: search } });
+							const selectedCategories = categories.filter(category => category.seleccionado);
+							this.props.updateProfile({ id: profile._id, profile: { nombre: name, categorias: selectedCategories, busquedas: search } });
 						}
 					}}><IntlMessages id="profile.saveProfile" /></Button>
 					<Button className="text-uppercase" color="secondary" onClick={() => {
@@ -125,5 +137,6 @@ export default withRouter(connect(mapStateToProps, {
 	getCategories,
 	changeCheckboxvalue,
 	getProfile,
-	updateProfile
+	updateProfile,
+	setCategories
 })(AddContact));
