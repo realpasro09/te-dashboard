@@ -13,7 +13,7 @@ const ListCard = ({ onEditProfile, profiles }) => {
 	return (
 		<div>
 			{profiles.map((card, index) => (
-				<CardProfile key={index} text={card.nombre} onEditProfile={onEditProfile} />
+				<CardProfile key={index} text={card.nombre} id={card._id} onEditProfile={onEditProfile} />
 			))}
 		</div>
 	);

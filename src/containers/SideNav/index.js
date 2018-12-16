@@ -27,6 +27,7 @@ class SideNav extends React.PureComponent {
 		super(props);
 		this.state = {
 			editProfileState: false,
+			id: null
 		}
 	}
 
@@ -41,8 +42,8 @@ class SideNav extends React.PureComponent {
 		this.setState({ editProfileState: false });
 	};
 
-	onEditProfile = () => {
-		this.setState({ editProfileState: true });
+	onEditProfile = (id) => {
+		this.setState({ editProfileState: true, id });
 	};
 
 	render() {
@@ -102,7 +103,7 @@ class SideNav extends React.PureComponent {
 					<ListCard profiles={this.props.profiles} onEditProfile={this.onEditProfile} />}
 				{
 					editProfileState &&
-					<AddContact open={editProfileState} onContactClose={this.onProfileClose} />
+					<AddContact open={editProfileState} onContactClose={this.onProfileClose} id={this.state.id} />
 				}
 				<button className="jt-btn jr-btn-primary text-uppercase btn-block btn btn-primary" onClick={() => { this.onEditProfile() }}> Agregar Perfil</button >
 			</div >
