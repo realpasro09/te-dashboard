@@ -73,7 +73,6 @@ const generalState = (state = initialState, action) => {
 				categories: action.categories
 			}
 		case DELETE_PROFILE_SUCCEEDED:
-			console.log("reducer");
 			return {
 				...state,
 				id: action.id
