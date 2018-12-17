@@ -90,7 +90,6 @@ function* deleteProfile(action) {
 };
 
 function* deleteProfileWatcher() {
-	console.log("ssss");
 	yield takeLatest(DELETE_PROFILE, deleteProfile);
 };
 
