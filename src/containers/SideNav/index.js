@@ -5,7 +5,7 @@ import Drawer from "rc-drawer";
 import { Config } from "constants/ThemeColors";
 import SidenavContent from "./SidenavContent";
 import SidenavLogo from "components/SidenavLogo";
-import { listProfiles } from "../../actions/General";
+import { listProfiles, deleteProfile } from "../../actions/General";
 import {
 	COLLAPSED_DRAWER,
 	FIXED_DRAWER,
@@ -45,6 +45,10 @@ class SideNav extends React.PureComponent {
 	onEditProfile = (id) => {
 		this.setState({ editProfileState: true, id });
 	};
+
+	onDeleteProfile = (id) => {
+		this.props.deleteProfile(id);
+	}
 
 	render() {
 		const sideBarStyle = {
@@ -105,7 +109,8 @@ class SideNav extends React.PureComponent {
 				<div style={overflowStyle}>
 					{
 						this.props.profiles &&
-						<ListCard profiles={this.props.profiles} onEditProfile={this.onEditProfile} />}
+						<ListCard profiles={this.props.profiles} onEditProfile={this.onEditProfile} onDeleteProfile={this.onDeleteProfile}/>
+					}
 					{
 						editProfileState &&
 						<AddContact open={editProfileState} onContactClose={this.onProfileClose} id={this.state.id} />
@@ -132,6 +137,6 @@ const mapStateToProps = ({ settings, general }) => {
 export default withRouter(
 	connect(
 		mapStateToProps,
-		{ toggleCollapsedNav, updateWindowWidth, listProfiles },
+		{ toggleCollapsedNav, updateWindowWidth, listProfiles, deleteProfile },
 	)(SideNav)
 );
