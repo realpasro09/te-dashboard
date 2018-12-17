@@ -50,6 +50,5 @@ export function setCategories(categories) {
 }
 
 export function deleteProfile(id) {
-	console.log("action");
 	return { type: DELETE_PROFILE, id};
 }
