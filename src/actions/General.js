@@ -1,6 +1,7 @@
 import {
 	CONSTANT_VALUE,
 	LIST_PROFILES,
+	DELETE_PROFILE,
 	CREATE_PROFILE,
 	CREATE_PROFILE_SUCEDED,
 	GET_CATEGORY,
@@ -9,6 +10,8 @@ import {
 	UPDATE_PROFILE,
 	SET_CATEGORIES
 } from 'constants/ActionTypes';
+import { func } from 'prop-types';
+import { DELETE_PROFILE_SUCCEEDED } from '../constants/ActionTypes';
 
 export function setNewValue(newValue) {
 	return { type: CONSTANT_VALUE, newValue };
@@ -44,4 +47,9 @@ export function updateProfile(payload) {
 
 export function setCategories(categories) {
 	return { type: SET_CATEGORIES, categories };
+}
+
+export function deleteProfile(id) {
+	console.log("action");
+	return { type: DELETE_PROFILE, id};
 }
