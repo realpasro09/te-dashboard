@@ -81,7 +81,6 @@ function* updateProfileWatcher() {
 }
 
 function* deleteProfile(action) {
-	console.log("entra saga");
 	const json = yield fetch(`http://localhost:8081/api/eliminar-perfil/${action.id}/true`, {method: 'post'})
 		.then(response => response.json());
 	if(confirm(json.msg)){
