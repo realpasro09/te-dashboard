@@ -1,5 +1,5 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
-import { LIST_PROFILES_SUCCEEDED, LIST_PROFILES, CREATE_PROFILE, CREATE_PROFILE_SUCEDED, GET_PROFILE, GET_PROFILE_SUCEDED, UPDATE_PROFILE } from "../constants/ActionTypes";
+import { LIST_PROFILES_SUCCEEDED, LIST_PROFILES, CREATE_PROFILE, CREATE_PROFILE_SUCEDED, GET_PROFILE, GET_PROFILE_SUCEDED, UPDATE_PROFILE, DELETE_PROFILE } from "../constants/ActionTypes";
 import { GET_CATEGORY, GET_CATEGORY_SUCCESS, CHANGE_CHECKBOX_VALUE, CHANGE_CHECKBOX_VALUE_SUCCESS } from 'constants/ActionTypes';
 
 function* fetchNews() {
@@ -27,6 +27,9 @@ function* createProfile(action) {
 			method: 'post',
 			body: JSON.stringify(action.profile)
 		});
+	if(confirm("Creado con éxito")){
+		window.location.reload();  
+	}
 	yield put({ type: CREATE_PROFILE_SUCEDED, createProfileSuceded: json.ok, })
 };
 
@@ -77,6 +80,20 @@ function* updateProfileWatcher() {
 	yield takeLatest(UPDATE_PROFILE, updateProfile)
 }
 
+function* deleteProfile(action) {
+	console.log("entra saga");
+	const json = yield fetch(`http://localhost:8081/api/eliminar-perfil/${action.id}/true`, {method: 'post'})
+		.then(response => response.json());
+	if(confirm(json.msg)){
+		window.location.reload();  
+	}
+};
+
+function* deleteProfileWatcher() {
+	yield takeLatest(DELETE_PROFILE, deleteProfile);
+};
+
+
 export default function* rootSaga() {
 	yield all([
 		actionWatcher(),
@@ -85,6 +102,7 @@ export default function* rootSaga() {
 		getCategoryWatcher(),
 		changeCheckboxValueWatcher(),
 		getProfileWatcher(),
-		updateProfileWatcher()
+		updateProfileWatcher(),
+		deleteProfileWatcher()
 	]);
 }

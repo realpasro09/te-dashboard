@@ -9,12 +9,13 @@ const style = {
 	minHeight: "30px",
 };
 
-const ListCard = ({ onEditProfile, profiles }) => {
+const ListCard = ({ onEditProfile, profiles, onDeleteProfile }) => {
 	return (
 		<div>
 			{profiles.map((card, index) => (
-				<CardProfile key={index} text={card.nombre} id={card._id} onEditProfile={onEditProfile} />
-			))}
+				<CardProfile key={index} text={card.nombre} id={card._id} onEditProfile={onEditProfile} onDeleteProfile={onDeleteProfile}/>
+				))}
+			<hr style={{color:"red"}}></hr>
 		</div>
 	);
 };

@@ -5,7 +5,8 @@ import {
 	GET_CATEGORY_SUCCESS,
 	CHANGE_CHECKBOX_VALUE_SUCCESS,
 	GET_PROFILE_SUCEDED,
-	SET_CATEGORIES
+	SET_CATEGORIES,
+	DELETE_PROFILE_SUCCEEDED
 } from 'constants/ActionTypes';
 
 const initialState = {
@@ -70,6 +71,11 @@ const generalState = (state = initialState, action) => {
 			return {
 				...state,
 				categories: action.categories
+			}
+		case DELETE_PROFILE_SUCCEEDED:
+			return {
+				...state,
+				id: action.id
 			}
 		default:
 			return state;
