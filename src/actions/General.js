@@ -9,11 +9,9 @@ import {
 	GET_PROFILE,
 	UPDATE_PROFILE,
 	SET_CATEGORIES,
-  GET_SOURSES,
+	GET_SOURCES,
 	CHANGE_SOURCECHECKBOX_VALUE
 } from 'constants/ActionTypes';
-import { func } from 'prop-types';
-import { DELETE_PROFILE_SUCCEEDED } from '../constants/ActionTypes';
 
 export function setNewValue(newValue) {
 	return { type: CONSTANT_VALUE, newValue };
@@ -52,14 +50,13 @@ export function setCategories(categories) {
 }
 
 export function deleteProfile(id) {
-	return { type: DELETE_PROFILE, id};
+	return { type: DELETE_PROFILE, id };
 }
 
-export function changeSourceCheckboxvalue(){
-	return {type: CHANGE_SOURCECHECKBOX_VALUE, payload};
+export function changeSourceCheckboxvalue(payload) {
+	return { type: CHANGE_SOURCECHECKBOX_VALUE, payload };
 }
 
-export function getSources(){
-	return {type: GET_SOURSES};
+export function getSources() {
+	return { type: GET_SOURCES };
 }
-
