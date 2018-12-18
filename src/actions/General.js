@@ -4,7 +4,9 @@ import {
 	CREATE_PROFILE,
 	CREATE_PROFILE_SUCEDED,
     GET_CATEGORY,
-    CHANGE_CHECKBOX_VALUE
+	CHANGE_CHECKBOX_VALUE,
+	GET_SOURSES,
+	CHANGE_SOURCECHECKBOX_VALUE
 } from 'constants/ActionTypes';
 
 export function setNewValue(newValue) {
@@ -30,3 +32,12 @@ export function getCategories(){
 export function changeCheckboxvalue(payload){
     return {type: CHANGE_CHECKBOX_VALUE, payload};
 }
+
+export function changeSourceCheckboxvalue(){
+	return {type: CHANGE_SOURCECHECKBOX_VALUE, payload};
+}
+
+export function getSources(){
+	return {type: GET_SOURSES};
+}
+

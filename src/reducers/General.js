@@ -1,34 +1,40 @@
-import { CONSTANT_VALUE } from 'constants/ActionTypes';
-import { LIST_PROFILES_SUCCEEDED, 
-  CREATE_PROFILE_SUCEDED, GET_CATEGORY,
+import { CONSTANT_VALUE } from "constants/ActionTypes";
+import {
+  LIST_PROFILES_SUCCEEDED,
+  CREATE_PROFILE_SUCEDED,
+  GET_CATEGORY,
   GET_CATEGORY_SUCCESS,
-  CHANGE_CHECKBOX_VALUE_SUCCESS } from 'constants/ActionTypes';
+  CHANGE_CHECKBOX_VALUE_SUCCESS,
+  GET_SOURSES_SUCCESS,
+  CHANGE_SOURCESCHECKBOX_VALUE_SUCCESS
+} from "constants/ActionTypes";
 
 const initialState = {
-	newValue: '',
-	profiles: [],
+  newValue: "",
+  profiles: [],
   createProfileSuceded: false,
-  categories: []
+  categories: [],
+  sources: []
 };
 
 const generalState = (state = initialState, action) => {
-	switch (action.type) {
-		case CONSTANT_VALUE:
-			return {
-				...state,
-				newValue: action.newValue
-			};
-		case LIST_PROFILES_SUCCEEDED:
-			return {
-				...state,
-				profiles: action.profiles
-			};
-		case CREATE_PROFILE_SUCEDED:
-			return {
-				...state,
-				createProfileSuceded: action.createProfileSuceded
+  switch (action.type) {
+    case CONSTANT_VALUE:
+      return {
+        ...state,
+        newValue: action.newValue
       };
-      case GET_CATEGORY_SUCCESS:
+    case LIST_PROFILES_SUCCEEDED:
+      return {
+        ...state,
+        profiles: action.profiles
+      };
+    case CREATE_PROFILE_SUCEDED:
+      return {
+        ...state,
+        createProfileSuceded: action.createProfileSuceded
+      };
+    case GET_CATEGORY_SUCCESS:
       const newcategories = [];
       action.categories.forEach(element => {
         newcategories.push({ nombre: element, seleccionado: false });
@@ -56,9 +62,37 @@ const generalState = (state = initialState, action) => {
         ...state,
         categories: newCategories
       };
-		default:
-			return state;
+    case GET_SOURSES_SUCCESS:
+      const newSources = [];
+      action.sources.sources.forEach(element => {
+        newSources.push({ name: element, selected: false });
+      });
+      return {
+        ...state,
+        sources: newSources.slice(1,6)
+      };
+    case CHANGE_SOURCESCHECKBOX_VALUE_SUCCESS:
+      const new_Sources = [];
+      state.sources.forEach(element => {
+        if (element.name === action.source.name) {
+          new_Sources.push({
+            nombre: element.name,
+            selected: action.source.selected
+          });
+        } else {
+          new_Sources.push({
+            name: element.name,
+            selected: element.selected
+          });
+        }
+      });
+      return {
+        ...state,
+        sources: new_Sources.slice(1,6)
+      };
+    default:
+      return state;
   }
-}
+};
 
 export default generalState;
