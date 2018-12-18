@@ -3,7 +3,12 @@ import { Button, Modal, ModalHeader } from 'reactstrap';
 import IntlMessages from 'util/IntlMessages';
 import { createProfile, setCreateProfileSuceded, getProfile, updateProfile, setCategories } from 'actions/General'
 import { withRouter } from 'react-router-dom';
-import { getCategories, changeCheckboxvalue } from "../../../actions/General";
+import {
+	getCategories,
+	changeCheckboxvalue,
+	changeSourceCheckboxvalue,
+	getSources
+} from "../../../actions/General";
 import { connect } from "react-redux";
 
 class AddContact extends React.Component {
@@ -39,6 +44,7 @@ class AddContact extends React.Component {
 	}
 
 	componentDidMount() {
+		this.props.getSources();
 		this.props.getCategories();
 		if (this.props.id) {
 			this.props.getProfile(this.props.id);
@@ -66,6 +72,29 @@ class AddContact extends React.Component {
 			);
 		}
 
+		const createCheckboxesforSources = item => {
+			return (
+				<div key={item.name.id}>
+					<div className="form-checkbox">
+						<input
+							type="checkbox"
+							checked={item.selected}
+							onChange={event => {
+								this.props.changeSourceCheckboxvalue({
+									name: item.name,
+									selected: event.target.checked
+								});
+							}}
+						/>
+						<span className="check">
+							<i className="zmdi zmdi-check zmdi-hc-lg" />
+						</span>
+						{item.name.name}
+					</div>
+				</div>
+			);
+		};
+
 		const { onContactClose, open, contact = {}, id, categories } = this.props;
 		const { name, search, profile } = this.state;
 		let { thumb } = this.state;
@@ -85,7 +114,10 @@ class AddContact extends React.Component {
 				<div className="modal-box-content">
 					<div className="row no-gutters">
 						<div className="col-lg-3 text-center text-lg-right order-lg-2">
-							<img className="ml-lg-3 mb-4 mb-lg-0 avatar size-120" src={thumb} />
+							<img
+								className="ml-lg-3 mb-4 mb-lg-0 avatar size-120"
+								src={thumb}
+							/>
 						</div>
 
 						<div className="col-lg-9 d-flex flex-column order-lg-1">
@@ -94,9 +126,20 @@ class AddContact extends React.Component {
 								onChange={(event) => this.setState({ name: event.target.value })}
 								value={name}
 							/>
+
 							<div>
+								<br />
+								<h3>Categorias</h3>
 								{categories.map(createCheckboxes)}
 							</div>
+
+							<div>
+								<br />
+								<h3>Fuentes</h3>
+								{this.props.sources.map(createCheckboxesforSources)}
+								<br />
+							</div>
+
 							<textarea rows="10" className="form-control mb-2"
 								placeholder="Criterios de busqueda"
 								onChange={(event) => this.setState({ search: event.target.value })}
@@ -127,8 +170,8 @@ class AddContact extends React.Component {
 }
 
 const mapStateToProps = ({ general }) => {
-	const { createProfileSuceded, categories, profile } = general;
-	return { createProfileSuceded, categories, profile }
+	const { createProfileSuceded, categories, sources, profile } = general;
+	return { createProfileSuceded, categories, profile, sources }
 };
 
 export default withRouter(connect(mapStateToProps, {
@@ -136,6 +179,8 @@ export default withRouter(connect(mapStateToProps, {
 	setCreateProfileSuceded,
 	getCategories,
 	changeCheckboxvalue,
+	getSources,
+	changeSourceCheckboxvalue,
 	getProfile,
 	updateProfile,
 	setCategories

@@ -6,7 +6,9 @@ import {
 	CHANGE_CHECKBOX_VALUE_SUCCESS,
 	GET_PROFILE_SUCEDED,
 	SET_CATEGORIES,
-	DELETE_PROFILE_SUCCEEDED
+	DELETE_PROFILE_SUCCEEDED,
+	GET_SOURCES_SUCCESS,
+	CHANGE_SOURCESCHECKBOX_VALUE_SUCCESS
 } from 'constants/ActionTypes';
 
 const initialState = {
@@ -14,7 +16,8 @@ const initialState = {
 	profiles: [],
 	createProfileSuceded: false,
 	categories: [],
-	profile: null
+	profile: null,
+	sources: []
 };
 
 const generalState = (state = initialState, action) => {
@@ -62,6 +65,34 @@ const generalState = (state = initialState, action) => {
 				...state,
 				categories: newCategories
 			};
+		case GET_SOURCES_SUCCESS:
+			const newSources = [];
+			action.sources.sources.forEach(element => {
+				newSources.push({ name: element, selected: false });
+			});
+			return {
+				...state,
+				sources: newSources.slice(1, 6)
+			};
+		case CHANGE_SOURCESCHECKBOX_VALUE_SUCCESS:
+			const new_Sources = [];
+			state.sources.forEach(element => {
+				if (element.name === action.source.name) {
+					new_Sources.push({
+						name: element.name,
+						selected: action.source.selected
+					});
+				} else {
+					new_Sources.push({
+						name: element.name,
+						selected: element.selected
+					});
+				}
+			});
+			return {
+				...state,
+				sources: new_Sources
+			};
 		case GET_PROFILE_SUCEDED:
 			return {
 				...state,
@@ -81,5 +112,4 @@ const generalState = (state = initialState, action) => {
 			return state;
 	}
 }
-
 export default generalState;
