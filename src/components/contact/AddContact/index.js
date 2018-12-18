@@ -1,62 +1,76 @@
-import React from "react";
-import { Button, Modal, ModalHeader } from "reactstrap";
-import IntlMessages from "util/IntlMessages";
-import { createProfile, setCreateProfileSuceded } from "actions/General";
-import { withRouter } from "react-router-dom";
-import {
-  getCategories,
-  changeCheckboxvalue,
-  changeSourceCheckboxvalue,
-  getSources
-} from "../../../actions/General";
+import React from 'react';
+import { Button, Modal, ModalHeader } from 'reactstrap';
+import IntlMessages from 'util/IntlMessages';
+import { createProfile, setCreateProfileSuceded, getProfile, updateProfile, setCategories } from 'actions/General'
+import { withRouter } from 'react-router-dom';
+import { getCategories, 
+        changeCheckboxvalue,
+        changeSourceCheckboxvalue,
+        getSources} from "../../../actions/General";
 import { connect } from "react-redux";
 
 class AddContact extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      search: ""
-    };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			name: "",
+			search: "",
+			profile: this.props.profile,
+		};
+	}
 
-  componentDidUpdate() {
-    if (this.props.createProfileSuceded) {
-      this.props.setCreateProfileSuceded(false);
-      this.props.onContactClose();
-    }
-  }
+	componentDidUpdate() {
+		if (this.props.createProfileSuceded) {
+			this.props.setCreateProfileSuceded(false);
+			this.props.onContactClose();
+		}
 
-  componentDidMount() {
-    this.props.getCategories();
+		if (this.props.profile !== this.state.profile) {
+			const { profile } = this.props;
+
+			let categories = profile.categorias.concat(this.props.categories);
+			categories = categories.filter((category, index, self) =>
+				index === self.findIndex((c) => (
+					c.nombre === category.nombre
+				))
+			)
+
+			this.props.setCategories(categories);
+
+			this.setState({ profile, name: profile.nombre, search: profile.busquedas });
+		}
+	}
+
+	componentDidMount() {
     this.props.getSources();
-  }
+		this.props.getCategories();
+		if (this.props.id) {
+			this.props.getProfile(this.props.id);
+		}
+	}
 
-  render() {
-    const createCheckboxes = item => {
-      return (
-        <div key={item.nombre}>
-          <div className="form-checkbox">
-            <input
-              type="checkbox"
-              checked={item.seleccionado}
-              onChange={event => {
-                this.props.changeCheckboxvalue({
-                  nombre: item.nombre,
-                  seleccionado: event.target.checked
-                });
-              }}
-            />
-            <span className="check">
-              <i className="zmdi zmdi-check zmdi-hc-lg" />
-            </span>
-            {item.nombre}
-          </div>
-        </div>
-      );
-    };
-
-    const createCheckboxesforSources = item => {
+	render() {
+		const createCheckboxes = (item) => {
+			return (
+				<div key={item.nombre}>
+					<div className="form-checkbox">
+						<input
+							type="checkbox"
+							checked={item.seleccionado}
+							onChange={event => {
+								this.props.changeCheckboxvalue({ nombre: item.nombre, seleccionado: event.target.checked });
+							}}
+						/>
+						<span className="check">
+							<i className="zmdi zmdi-check zmdi-hc-lg" />
+						</span>
+						{item.nombre}
+					</div>
+				</div>
+			);
+		}
+    
+    onst createCheckboxesforSources = item => {
       return (
         <div key={item.name.id}>
           <div className="form-checkbox">
@@ -78,42 +92,22 @@ class AddContact extends React.Component {
         </div>
       );
     };
-    const {
-      onSaveContact,
-      onDeleteContact,
-      onContactClose,
-      open,
-      contact = {}
-    } = this.props;
-    const {
-      id,
-      name,
-      search,
-      phone,
-      designation,
-      selected,
-      starred,
-      frequently
-    } = this.state;
-    let { thumb } = this.state;
-    if (!thumb) {
-      thumb = "http://via.placeholder.com/225x225";
-    }
-    return (
-      <Modal className="modal-box" toggle={onContactClose} isOpen={open}>
-        <ModalHeader className="modal-box-header bg-primary">
-          {contact.name === "" ? (
-            <IntlMessages id="profile.addProfile" />
-          ) : (
-            <IntlMessages id="profile.saveProfile" />
-          )}
-          <span className="text-white pointer">
-            <i
-              className="zmdi zmdi-close zmdi-hc-lg"
-              onClick={onContactClose}
-            />
-          </span>
-        </ModalHeader>
+
+		const { onContactClose, open, contact = {}, id, categories } = this.props;
+		const { name, search, profile } = this.state;
+		let { thumb } = this.state;
+		if (!thumb) {
+			thumb = 'http://via.placeholder.com/225x225';
+		}
+		return (
+			<Modal className="modal-box" toggle={onContactClose} isOpen={open}>
+				<ModalHeader className="modal-box-header bg-primary">
+					{contact.name === '' ? <IntlMessages id="profile.addProfile" /> :
+						<IntlMessages id="profile.saveProfile" />}
+					<span className="text-white pointer">
+						<i className="zmdi zmdi-close zmdi-hc-lg" onClick={onContactClose} />
+					</span>
+				</ModalHeader>
 
         <div className="modal-box-content">
           <div className="row no-gutters">
@@ -124,15 +118,14 @@ class AddContact extends React.Component {
               />
             </div>
 
-            <div className="col-lg-9 d-flex flex-column order-lg-1">
-              <input
-                type="text"
-                className="form-control mb-2"
-                placeholder="Nombre"
-                onChange={event => this.setState({ name: event.target.value })}
-                defaultValue={name}
-              />
-              <div>
+						<div className="col-lg-9 d-flex flex-column order-lg-1">
+							<input type="text" className="form-control mb-2"
+								placeholder="Nombre"
+								onChange={(event) => this.setState({ name: event.target.value })}
+								value={name}
+							/>
+							
+               <div>
                 <br/>
                 <h3>Categorias</h3>
                 {this.props.categories.map(createCheckboxes)}
@@ -143,66 +136,50 @@ class AddContact extends React.Component {
                 <h3>Fuentes</h3>
 								{this.props.sources.map(createCheckboxesforSources)}
 								<br/>
-              </div>
+              </div>   
+                  
+							<textarea rows="10" className="form-control mb-2"
+								placeholder="Criterios de busqueda"
+								onChange={(event) => this.setState({ search: event.target.value })}
+								value={search}
+							/>
+						</div>
+					</div>
+				</div>
 
-              <textarea
-                rows="10"
-                className="form-control mb-2"
-                placeholder="Criterios de busqueda"
-                onChange={event =>
-                  this.setState({ search: event.target.value })
-                }
-                value={search}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="modal-box-footer d-flex flex-row">
-          <Button
-            className="text-uppercase"
-            disabled={name === "" || search === ""}
-            color="primary"
-            onClick={() => {
-              this.props.createProfile({
-                nombre: name,
-                categorias: "categorias",
-                busquedas: search
-              });
-            }}
-          >
-            <IntlMessages id="profile.saveProfile" />
-          </Button>
-          <Button
-            className="text-uppercase"
-            color="secondary"
-            onClick={() => {
-              onContactClose();
-            }}
-          >
-            <IntlMessages id="profile.cancel" />
-          </Button>
-        </div>
-      </Modal>
-    );
-  }
+				<div className="modal-box-footer d-flex flex-row">
+					<Button className="text-uppercase" disabled={name === '' || search === ''} color="primary" onClick={() => {
+						if (!id) {
+							const selectedCategories = categories.filter(category => category.seleccionado);
+							this.props.createProfile({ nombre: name, categorias: selectedCategories, busquedas: search });
+						}
+						else {
+							const selectedCategories = categories.filter(category => category.seleccionado);
+							this.props.updateProfile({ id: profile._id, profile: { nombre: name, categorias: selectedCategories, busquedas: search } });
+						}
+					}}><IntlMessages id="profile.saveProfile" /></Button>
+					<Button className="text-uppercase" color="secondary" onClick={() => {
+						onContactClose();
+					}}><IntlMessages id="profile.cancel" /></Button>
+				</div>
+			</Modal >
+		);
+	}
 }
 
 const mapStateToProps = ({ general }) => {
-  const { createProfileSuceded, categories, sources } = general;
-  return { createProfileSuceded, categories, sources };
+	const { createProfileSuceded, categories, sources, profile } = general;
+	return { createProfileSuceded, categories, profile, sources }
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    {
-      createProfile,
-      setCreateProfileSuceded,
-      getCategories,
-      changeCheckboxvalue,
-      getSources,
-      changeSourceCheckboxvalue
-    }
-  )(AddContact)
-);
+export default withRouter(connect(mapStateToProps, {
+	createProfile,
+	setCreateProfileSuceded,
+	getCategories,
+	changeCheckboxvalue,
+  getSources,
+  changeSourceCheckboxvalue,
+	getProfile,
+	updateProfile,
+	setCategories
+})(AddContact));

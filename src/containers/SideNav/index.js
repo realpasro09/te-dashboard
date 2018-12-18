@@ -5,7 +5,7 @@ import Drawer from "rc-drawer";
 import { Config } from "constants/ThemeColors";
 import SidenavContent from "./SidenavContent";
 import SidenavLogo from "components/SidenavLogo";
-import { listProfiles } from "../../actions/General";
+import { listProfiles, deleteProfile } from "../../actions/General";
 import {
 	COLLAPSED_DRAWER,
 	FIXED_DRAWER,
@@ -27,6 +27,7 @@ class SideNav extends React.PureComponent {
 		super(props);
 		this.state = {
 			editProfileState: false,
+			id: null
 		}
 	}
 
@@ -41,17 +42,25 @@ class SideNav extends React.PureComponent {
 		this.setState({ editProfileState: false });
 	};
 
-	onEditProfile = () => {
-		this.setState({ editProfileState: true });
+	onEditProfile = (id) => {
+		this.setState({ editProfileState: true, id });
 	};
+
+	onDeleteProfile = (id) => {
+		this.props.deleteProfile(id);
+	}
 
 	render() {
 		const sideBarStyle = {
 			width: "250px",
 			color: "white",
 			backgroundColor: "gray",
-			overflowY: "scroll"
 		};
+		const overflowStyle = {
+			overflowY: "scroll",
+			overflowX: "hidden",
+			maxHeight: "925px"
+		}
 		const {
 			navCollapsed,
 			drawerType,
@@ -97,13 +106,16 @@ class SideNav extends React.PureComponent {
 					</div>
 				</div>
 				<br />
-				{
-					this.props.profiles &&
-					<ListCard profiles={this.props.profiles} onEditProfile={this.onEditProfile} />}
-				{
-					editProfileState &&
-					<AddContact open={editProfileState} onContactClose={this.onProfileClose} />
-				}
+				<div style={overflowStyle}>
+					{
+						this.props.profiles &&
+						<ListCard profiles={this.props.profiles} onEditProfile={this.onEditProfile} onDeleteProfile={this.onDeleteProfile}/>
+					}
+					{
+						editProfileState &&
+						<AddContact open={editProfileState} onContactClose={this.onProfileClose} id={this.state.id} />
+					}
+				</div>
 				<button className="jt-btn jr-btn-primary text-uppercase btn-block btn btn-primary" onClick={() => { this.onEditProfile() }}> Agregar Perfil</button >
 			</div >
 		);
@@ -125,6 +137,6 @@ const mapStateToProps = ({ settings, general }) => {
 export default withRouter(
 	connect(
 		mapStateToProps,
-		{ toggleCollapsedNav, updateWindowWidth, listProfiles },
+		{ toggleCollapsedNav, updateWindowWidth, listProfiles, deleteProfile },
 	)(SideNav)
 );

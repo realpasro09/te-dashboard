@@ -103,7 +103,8 @@
 
 %jr-card-style {
   padding: $jr-card-padding;
-  margin-bottom: $jr-card-margin;
+  margin-top: 5px;
+  margin-bottom: 5px;
   background-color: $white;
   @include border-radius($border-radius-lg);
   border: $jr-border;
